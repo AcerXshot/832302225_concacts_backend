@@ -15,8 +15,6 @@ def get_db_connection():
 
 
 
-
-
 # 【查】GET /api/contacts - 获取所有联系人
 @app.route('/api/contacts', methods=['GET'])
 def get_contacts():
