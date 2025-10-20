@@ -4,23 +4,29 @@ This is the first assignment for the Software Engineering course at Fuzhou Unive
 
 This repository contains the **backend** part of the project.
 
+**Live API Endpoint:** [https://eight32302225-backend.onrender.com/api/contacts](https://eight32302225-backend.onrender.com/api/contacts)
+
+**Frontend Application:** [https://832302225-concacts-frontend.vercel.app/](https://832302225-concacts-frontend.vercel.app/)
+
 ## Project Description
 
 This is a simple RESTful API built with Python and the Flask framework. It provides full CRUD (Create, Read, Update, Delete) functionality for managing contacts.
 
-**Frontend Repository:** [Click Here](https://github.com/AcerXshot/832302225_concacts_frontend)  
+**Frontend Repository:** [Click Here](https://github.com/AcerXshot/832302225_concacts_frontend)
 
 ## Tech Stack
 
 * **Language:** Python 3
 * **Framework:** Flask
-* **Data Storage:** Python List (In-memory simulation) / SQLite
+* **Server:** Gunicorn
+* **Database:** SQLite
 * **Libraries:** Flask-CORS
 
 ## API Endpoints
 
 | Method   | Path                       | Description              |
 | -------- | -------------------------- | ------------------------ |
+| `GET`    | `/`                        | Server status check      |
 | `GET`    | `/api/contacts`            | Get all contacts         |
 | `POST`   | `/api/contacts`            | Add a new contact        |
 | `PUT`    | `/api/contacts/<int:id>`   | Update a specific contact |
@@ -28,11 +34,11 @@ This is a simple RESTful API built with Python and the Flask framework. It provi
 
 ## How to Run Locally
 
-1.  Clone this repository to your local machine.
+1.  Clone this repository.
 2.  Create and activate a Python virtual environment.
-3.  Install the dependencies:
+3.  Install dependencies:
     ```bash
-    pip install Flask Flask-CORS
+    pip install -r requirements.txt
     ```
 4.  Run the application:
     ```bash
