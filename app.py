@@ -25,6 +25,9 @@ def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
+@app.route('/')
+def index():
+    return "Backend server is running. "
 
 # --- API 接口  ---
 @app.route('/api/contacts', methods=['GET'])
@@ -82,7 +85,5 @@ if __name__ == '__main__':
     init_database() # 在本地运行前，也确保数据库已初始化
     app.run(debug=True)
 
-# --- 为 Render 部署环境确保数据库初始化 ---
-# 当 Gunicorn 启动应用时，它会导入这个文件，这段代码就会被执行
 with app.app_context():
     init_database()
