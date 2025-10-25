@@ -32,9 +32,24 @@ def index():
 # --- API 接口  ---
 @app.route('/api/contacts', methods=['GET'])
 def get_contacts():
+    # 从 URL 参数中获取 'q'，如果没有则为空字符串
+    query = request.args.get('q', '')
+
     conn = get_db_connection()
-    contacts_rows = conn.execute('SELECT * FROM contacts').fetchall()
+
+    if query:
+        # 如果有搜索查询，使用 LIKE 语句进行模糊匹配
+        search_term = f"%{query}%"
+        contacts_rows = conn.execute(
+            'SELECT * FROM contacts WHERE name LIKE ? OR phone LIKE ?',
+            (search_term, search_term)
+        ).fetchall()
+    else:
+        # 如果没有搜索，返回所有联系人
+        contacts_rows = conn.execute('SELECT * FROM contacts').fetchall()
+
     conn.close()
+
     contacts = [dict(row) for row in contacts_rows]
     return jsonify(contacts)
 
