@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-# --- 数据库初始化 (已更新) ---
+# --- 数据库初始化 ---
 def init_database():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
