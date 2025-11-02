@@ -1,47 +1,50 @@
-# Contacts Application API (Backend)
+# Contacts App API (Backend)
 
-This is the first assignment for the Software Engineering course at Fuzhou University, focusing on building a contacts application with a separated frontend and backend architecture.
+This is the backend service for the first software engineering assignment, a full-stack contacts application.
 
-This repository contains the **backend** part of the project.
+This repository contains the **backend** part of the project, built with Python, Flask, and SQLite.
 
-**Live API Endpoint:** [https://eight32302225-backend.onrender.com/api/contacts](https://eight32302225-backend.onrender.com/api/contacts)
+### Project Links
 
-**Frontend Application:** [https://832302225-concacts-frontend.vercel.app/](https://832302225-concacts-frontend.vercel.app/)
+* **Live API URL (Render):** <https://eight32302225-backend.onrender.com/>
+* **Live Frontend App (Vercel):** <https://832302225-concacts-frontend.vercel.app/>
+* **Frontend Repository (GitHub):** <https://github.com/XcerShot/832302225_concacts_frontend>
 
-## Project Description
+### Features
 
-This is a simple RESTful API built with Python and the Flask framework. It provides full CRUD (Create, Read, Update, Delete) functionality for managing contacts.
+* **RESTful API:** Provides full `CRUD` (Create, Read, Update, Delete) endpoints for contacts.
+* **Persistent Storage:** Uses `SQLite` for data persistence, so data is not lost on restart.
+* **Dynamic Search:** Supports live search filtering via `name`, `phone`, or `email` fields.
+* **Robust Startup:** Automatically runs `CREATE TABLE IF NOT EXISTS` on startup to ensure the database is always ready, even in a cold-start environment.
+* **CORS Enabled:** Pre-configured with `Flask-CORS` to accept requests from the Vercel frontend.
 
-**Frontend Repository:** [Click Here](https://github.com/AcerXshot/832302225_concacts_frontend)
+### Tech Stack
 
-## Tech Stack
+* **Python 3:** Core programming language.
+* **Flask:** A lightweight web framework for building the API.
+* **Gunicorn:** A production-grade WSGI server for deployment on Render.
+* **SQLite:** A file-based database for persistent data storage.
 
-* **Language:** Python 3
-* **Framework:** Flask
-* **Server:** Gunicorn
-* **Database:** SQLite
-* **Libraries:** Flask-CORS
+### API Endpoints
 
-## API Endpoints
+| Method   | Path                       | Description                                  |
+| :------- | :------------------------- | :------------------------------------------- |
+| `GET`    | `/`                        | Checks the status of the backend server.     |
+| `GET`    | `/api/contacts`            | Gets a list of all contacts.                 |
+| `GET`    | `/api/contacts?q={query}`  | Searches contacts by `name`, `phone`, or `email`. |
+| `POST`   | `/api/contacts`            | Adds a new contact.                          |
+| `PUT`    | `/api/contacts/<int:id>`   | Updates a specific contact by ID.            |
+| `DELETE` | `/api/contacts/<int:id>`   | Deletes a specific contact by ID.            |
 
-| Method   | Path                       | Description              |
-| -------- | -------------------------- | ------------------------ |
-| `GET`    | `/`                        | Server status check      |
-| `GET`    | `/api/contacts`            | Get all contacts         |
-| `POST`   | `/api/contacts`            | Add a new contact        |
-| `PUT`    | `/api/contacts/<int:id>`   | Update a specific contact |
-| `DELETE` | `/api/contacts/<int:id>`   | Delete a specific contact |
-
-## How to Run Locally
+### How to Run Locally
 
 1.  Clone this repository.
-2.  Create and activate a Python virtual environment.
+2.  (Recommended) Create and activate a Python virtual environment.
 3.  Install dependencies:
     ```bash
-    pip install -r requirements.txt
+    pip install requirement.txt
     ```
 4.  Run the application:
     ```bash
     python app.py
     ```
-5.  The API will be running at `http://127.0.0.1:5000`.
