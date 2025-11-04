@@ -10,7 +10,6 @@ CORS(app)
 def init_database():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    # 为 contacts 表添加一个新的 email 字段，允许为空
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS contacts
                    (
@@ -32,12 +31,10 @@ def init_database():
                    );
                    """)
 
-    # --- 升级表结构 ---
-    # 这是一个安全的操作，尝试添加 email 列，如果它已存在则什么也不做
+
     try:
         cursor.execute("ALTER TABLE contacts ADD COLUMN email TEXT")
     except sqlite3.OperationalError:
-        # 'duplicate column name: email' 错误是正常的，说明列已存在
         pass
 
     conn.commit()
@@ -52,21 +49,20 @@ def get_db_connection():
     return conn
 
 
-# --- API 接口 (已全部更新) ---
+# --- API 接口  ---
 
 @app.route('/')
 def index():
     return "Backend server is running. Access the API at /api/contacts"
 
 
-# 【查】GET /api/contacts (已更新)
+# GET /api/contacts
 @app.route('/api/contacts', methods=['GET'])
 def get_contacts():
     query = request.args.get('q', '')
     conn = get_db_connection()
     if query:
         search_term = f"%{query}%"
-        # 搜索也支持 email
         contacts_rows = conn.execute(
             'SELECT * FROM contacts WHERE name LIKE ? OR phone LIKE ? OR email LIKE ?',
             (search_term, search_term, search_term)
@@ -78,13 +74,12 @@ def get_contacts():
     return jsonify(contacts)
 
 
-# 【增】POST /api/contacts (已更新)
+# POST /api/contacts
 @app.route('/api/contacts', methods=['POST'])
 def add_contact():
     new_contact = request.get_json()
     name = new_contact['name']
     phone = new_contact['phone']
-    # 接收 email，如果不存在则为 None
     email = new_contact.get('email')
 
     print(f"!!! 接收到的数据: {new_contact}, 提取的 Email: {email}")
@@ -99,7 +94,7 @@ def add_contact():
     return jsonify({'id': new_id, 'name': name, 'phone': phone, 'email': email}), 201
 
 
-# 【改】PUT /api/contacts/<id> (已更新)
+# PUT /api/contacts/<id>
 @app.route('/api/contacts/<int:id>', methods=['PUT'])
 def update_contact(id):
     contact_updates = request.get_json()
@@ -119,7 +114,7 @@ def update_contact(id):
         return jsonify({'id': id, 'name': name, 'phone': phone, 'email': email})
 
 
-# 【删】DELETE /api/contacts/<id> (保持不变)
+# DELETE /api/contacts/<id>
 @app.route('/api/contacts/<int:id>', methods=['DELETE'])
 def delete_contact(id):
     conn = get_db_connection()
