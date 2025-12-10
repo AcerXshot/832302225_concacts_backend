@@ -28,7 +28,7 @@ def init_database():
     cursor.execute("PRAGMA foreign_keys = ON;")
 
     # 1. 主表：存储基础信息和收藏状态
-    [cite_start]  # [cite: 17, 18, 19] 对应收藏功能 (is_favorite)
+      # [cite: 17, 18, 19] 对应收藏功能 (is_favorite)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS contacts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,7 +38,7 @@ def init_database():
     """)
 
     # 2. 详情表：存储多种联系方式 (一对多关系)
-    [cite_start]  # [cite: 20, 21, 22] 对应多联系方式功能
+      # [cite: 20, 21, 22] 对应多联系方式功能
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS contact_details (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -96,7 +96,7 @@ def get_contacts():
         # 这是一个简化搜索，实际生产中可能需要关联查询
         cursor.execute('SELECT * FROM contacts WHERE name LIKE ? ORDER BY is_favorite DESC, name ASC', (search_term,))
     else:
-        [cite_start]  # [cite: 18] 收藏的联系人排在前面 (ORDER BY is_favorite DESC)
+          # [cite: 18] 收藏的联系人排在前面 (ORDER BY is_favorite DESC)
         cursor.execute('SELECT * FROM contacts ORDER BY is_favorite DESC, name ASC')
 
     contacts_rows = cursor.fetchall()
@@ -175,7 +175,7 @@ def update_contact(id):
         if 'name' in data:
             cursor.execute('UPDATE contacts SET name = ? WHERE id = ?', (data['name'], id))
 
-        [cite_start]  # [cite: 17, 18] 处理收藏状态更新
+          # [cite: 17, 18] 处理收藏状态更新
         if 'is_favorite' in data:
             cursor.execute('UPDATE contacts SET is_favorite = ? WHERE id = ?', (data['is_favorite'], id))
 
