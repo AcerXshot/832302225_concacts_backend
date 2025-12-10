@@ -347,12 +347,13 @@ def import_excel():
 
 
 # --- 主程序入口 ---
+
+try:
+    init_database()
+    print('Database initialized')
+except Exception as e:
+    print(e)
+
 if __name__ == '__main__':
-    # 确保启动前数据库存在
-    if not os.path.exists(DB_FILE):
-        init_database()
-    else:
-        # 每次重启尝试运行 init_database 以确保新表被创建
-        init_database()
 
     app.run(debug=True, port=5000)
