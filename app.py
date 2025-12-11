@@ -58,7 +58,6 @@ def init_database():
 def format_contact(contact_row, details_rows):
     """
     将数据库查询结果转换为前端友好的 JSON 格式。
-    为了兼容你现有的前端代码，我们会自动提取第一个电话和邮箱放到顶层。
     """
     details = [dict(row) for row in details_rows]
 
